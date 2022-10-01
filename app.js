@@ -6,7 +6,7 @@ import { connectMongo } from './config/database';
 import { AppRoutes } from './routes/index'
 
 dotenv.config()
-const PORT = 8080
+const { API_PORT } = process.env 
 const app = express();
 
 app.use(bodyParser.json());
@@ -23,7 +23,6 @@ AppRoutes.forEach(route => {
             .catch(err => next(err))
     })
 })
-
-app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT}`);
+app.listen(API_PORT, () => {
+    console.log(`Server is running on PORT ${API_PORT}`);
 });
