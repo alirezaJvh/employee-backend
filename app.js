@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { connectMongo } from './config/database';
 import { AppRoutes } from './routes/index'
-import { verifyToken } from './middleware/auth-jwt'
+
 dotenv.config()
 const { API_PORT } = process.env 
 const app = express();
@@ -23,11 +23,7 @@ AppRoutes.forEach(route => {
             .catch(err => next(err))
     })
 })
-// app.get('/api/', [verifyToken], (req, res, next) => {
-//     console.log('call me')
-//     console.log(req.id)
-//     res.send('got it')
-// })
+
 app.listen(API_PORT, () => {
     console.log(`Server is running on PORT ${API_PORT}`);
 });

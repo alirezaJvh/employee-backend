@@ -1,5 +1,5 @@
 import { singup, singin } from "../controller/auth";
-import { getAllEmployees } from "../controller/employee";
+import { getAllEmployees, addEmployees } from "../controller/employee";
 import { verifyToken } from "../middleware/auth-jwt";
 
 export const AppRoutes = [
@@ -20,5 +20,11 @@ export const AppRoutes = [
         method: 'get',
         action: getAllEmployees,
         middlewares: [verifyToken],
+    },
+    {
+        path:'/employee',
+        method: 'post',
+        action: addEmployees,
+        middlewares: []
     }
 ]
