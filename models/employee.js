@@ -1,15 +1,18 @@
 import mongoose from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator'
 
 const employeeSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-    },
-    password: {
-        type: String,
-        required: true,
+        unique: true,
     },
     email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
         type: String,
         required: true,
     },
@@ -29,6 +32,6 @@ const employeeSchema = new mongoose.Schema({
         required: true,
     }
 })
-
+employeeSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' })
 const EmployeeModel = mongoose.model('employee', employeeSchema)
 export { EmployeeModel }

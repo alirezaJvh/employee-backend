@@ -5,12 +5,13 @@ import isEmail from 'validator/lib/isEmail';
 
 const singup = async (req, res) => {
     try {
+        console.log(req.body)
         const error = await registerInputValidation(req.body)
         if (error.message) {
-            return res.status(error.status).send(error.message)
+            return res.status(error.status).json({ message: error.message })
         } 
-        const employee = await createEmployee(req.body)
-        return res.status(200).send('User created successfully')
+        await createEmployee(req.body)
+        return res.status(200).json({message: 'User created successfully'})
     } catch (e) {
         console.log(e)
         res.status(500).json({
@@ -31,7 +32,6 @@ const createEmployee = async (inputs) => {
         await employee.save()
         return employee
     } catch (e) {
-        console.log('Error in saving employee')
         console.log(e.message)
     }
 }
@@ -65,9 +65,8 @@ const singin = async (req, res) => {
         const employee = await EmployeeModel.findOne({ username })
         const comparePassword = await bcrypt.compare(password, employee.password) 
         if (employee && comparePassword) {
-            const token = createToken(employee)
-            employee.token = token
-            return res.status(200).json({data: { token }})
+            const resultObj = creatResultObj(employee)
+            return res.status(200).json(resultObj)
         }
         return res.status(400).send('Invalid Credentials')
     } catch (e) {
@@ -84,14 +83,16 @@ const loginInputValidation = ({username, password}) => {
     return error
 }
 
-const createToken = (employee) => {
-    return jwt.sign(
+const creatResultObj = (employee) => {
+    const token = jwt.sign(
         {
             id: employee._id,
             username: employee.username,
         },
         process.env.PRIVATE_KEY,
     )
+    const {username, email, role, _id} = employee
+    return {employee: { username, email, role, id: _id }, token}
 }
 
 export { singup, singin }
