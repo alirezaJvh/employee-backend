@@ -1,5 +1,5 @@
 import { singup, singin } from "../controller/auth";
-import { getAllEmployees, addEmployees, editEmployee } from "../controller/employee";
+import { getAllEmployees, addEmployees, editEmployee, deleteEmployee } from "../controller/employee";
 import { verifyToken } from "../middleware/auth-jwt";
 
 export const AppRoutes = [
@@ -31,6 +31,12 @@ export const AppRoutes = [
         path: '/employee',
         method: 'put',
         action: editEmployee,
+        middlewares: [verifyToken],
+    }, 
+    {
+        path: '/employee',
+        method: 'delete',
+        action: deleteEmployee,
         middlewares: [verifyToken],
     }
 ]

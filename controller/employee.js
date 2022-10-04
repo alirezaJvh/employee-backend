@@ -76,7 +76,7 @@ const editEmployee = async (req, res) => {
         const { employeeRole } = req
         const { id, ...user } = req.body
         if (employeeRole !== 'ADMIN') {
-            return res.status(401).json({message: 'Unauthorized action'})
+            return res.status(401).json({message: 'Unauthorized action!'})
         }
         await EmployeeModel.findByIdAndUpdate(id, user)
         res.status(200).json({message: 'User updated successfully!'})
@@ -88,9 +88,17 @@ const editEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
     try {
-        
+        const { employeeRole } = req
+        const { id, ...user } = req.body
+        console.log(id)
+        if(employeeRole !== 'ADMIN') {
+            return res.status(401).json({message: 'Unauthorized action!'})
+        }
+        await EmployeeModel.findByIdAndDelete(id)
+        res.status(200).json({message: 'User deleted successfully!'})
     } catch (e) {
-
+        console.log(e)
+        res.status(400).json(e)
     }
 }
 
@@ -98,4 +106,5 @@ export {
     getAllEmployees, 
     addEmployees,
     editEmployee,
+    deleteEmployee,
 }
