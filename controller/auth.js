@@ -65,7 +65,7 @@ const singin = async (req, res) => {
         const employee = await EmployeeModel.findOne({ username })
         const comparePassword = await bcrypt.compare(password, employee.password) 
         if (employee && comparePassword) {
-            const resultObj = creatResultObj(employee)
+            const resultObj = creatResponseObj(employee)
             return res.status(200).json(resultObj)
         }
         return res.status(400).send('Invalid Credentials')
@@ -83,11 +83,11 @@ const loginInputValidation = ({username, password}) => {
     return error
 }
 
-const creatResultObj = (employee) => {
+const creatResponseObj = (employee) => {
     const token = jwt.sign(
         {
             id: employee._id,
-            username: employee.username,
+            role: employee.role,
         },
         process.env.PRIVATE_KEY,
     )

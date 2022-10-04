@@ -14,6 +14,7 @@ const verifyToken = async (req, res, next) => {
             });            
         }
         req.employeeId = decode.id
+        req.employeeRole = decode.role
         next()
     })
 }

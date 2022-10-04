@@ -71,4 +71,31 @@ const createPaginationParam = ({size, page}) => {
     }
 }
 
-export { getAllEmployees, addEmployees }
+const editEmployee = async (req, res) => {
+    try {
+        const { employeeRole } = req
+        const { id, ...user } = req.body
+        if (employeeRole !== 'ADMIN') {
+            return res.status(401).json({message: 'Unauthorized action'})
+        }
+        await EmployeeModel.findByIdAndUpdate(id, user)
+        res.status(200).json({message: 'User updated successfully!'})
+    } catch (e) {
+        console.log(e)
+        res.status(400).json(e)
+    }
+}
+
+const deleteEmployee = async (req, res) => {
+    try {
+        
+    } catch (e) {
+
+    }
+}
+
+export { 
+    getAllEmployees, 
+    addEmployees,
+    editEmployee,
+}
