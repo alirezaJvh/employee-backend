@@ -7,11 +7,12 @@ const singup = async (req, res) => {
     try {
         console.log(req.body)
         const error = await registerInputValidation(req.body)
-        if (error.message) {
-            return res.status(error.status).json({ message: error.message })
+        let { status, message } = error
+        if (message) {
+            return res.status(status).json({ message })
         } 
-        await createEmployee(req.body)
-        return res.status(200).json({message: 'User created successfully'})
+        const user = await createEmployee(req.body)
+        return res.status(200).json({ user })
     } catch (e) {
         console.log(e)
         res.status(500).json({

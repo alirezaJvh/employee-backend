@@ -32,7 +32,6 @@ const addEmployees = async (req, res) => {
     try {
         const { body } = req
         const employees = await prepareInputObj(body)
-        console.log(employees)
         await EmployeeModel.insertMany(employees)
         return res.status(200).json({message: 'Users created successfully'})
     } catch (e) {
@@ -64,8 +63,8 @@ const paginationEmployees = async (query) => {
         ])
         const totalPages = Math.ceil(totalItems / limit)
         const currentPage = parseInt(query.page)
-        const employees = employeesArray.map(({firstName, lastName, email, username, role, _id}) => {
-            return {firstName, lastName, email, username, role, id: _id}
+        const employees = employeesArray.map(({firstName, lastName, email, username, role, _id, address}) => {
+            return {id: _id, firstName, lastName, email, username, role, address}
         })
         return { totalItems, employees, totalPages, currentPage }
     } catch (e) {
@@ -93,8 +92,8 @@ const editEmployee = async (req, res) => {
         if (employeeRole !== 'ADMIN') {
             return res.status(401).json({message: 'Unauthorized action!'})
         }
-        await EmployeeModel.findByIdAndUpdate(id, user)
-        res.status(200).json({message: 'User updated successfully!'})
+        const result = await EmployeeModel.findByIdAndUpdate(id, user)
+        res.status(200).json(result)
     } catch (e) {
         console.log(e)
         res.status(400).json(e)
