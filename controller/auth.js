@@ -59,18 +59,25 @@ const singin = async (req, res) => {
     const { username, password } = req.body
     try {
         const error = loginInputValidation(req.body)
-        if (error.message) {
-            return res.status(error.status).send(error.message)
+        let { status, message } = error
+        if (message) {
+            return res.status(status).json({ message })
         }
         const employee = await EmployeeModel.findOne({ username })
+        if (!employee) {
+            [status, message] =[404, 'User not found!']
+            return res.status(status).json({ message })
+        }
         const comparePassword = await bcrypt.compare(password, employee.password) 
         if (employee && comparePassword) {
             const resultObj = creatResponseObj(employee)
             return res.status(200).json(resultObj)
         }
-        return res.status(400).send('Invalid Credentials')
+        [status, message] =[400, 'Invalid Credentials']
+        return res.status(status).json({ message })
     } catch (e) {
         console.log(e)
+        return res.status(500)
     }
 }
 
