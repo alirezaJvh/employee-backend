@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { EmployeeModel } from '../models/Employee'
 import isEmail from 'validator/lib/isEmail';
 
+
 const singup = async (req, res) => {
     try {
         console.log(req.body)

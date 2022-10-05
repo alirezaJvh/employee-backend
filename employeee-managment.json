@@ -1,0 +1,553 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "employeee-managment",
+    "contact": {},
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register",
+        "operationId": "Register",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RegisterRequest"
+                  },
+                  {
+                    "example": {
+                      "firstName": "ali",
+                      "lastName": "javaheri",
+                      "password": "12345",
+                      "username": "alireza",
+                      "email": "bbbbb.jvh98@gmail.com"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "firstName": "ali",
+                "lastName": "javaheri",
+                "password": "12345",
+                "username": "alireza",
+                "email": "bbbbb.jvh98@gmail.com"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "operationId": "Login",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/LoginRequest"
+                  },
+                  {
+                    "example": {
+                      "username": "alireza",
+                      "password": "1234"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "username": "alireza",
+                "password": "1234"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/employee": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get All Employee",
+        "operationId": "GetAllEmployee",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 2
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzdlMDNmNDkwMzdkMTI4ZjAzMjlmMiIsInVzZXJuYW1lIjoiYWxpcmV6YSIsImlhdCI6MTY2NDYxNDg3OX0.0EeCACuwr1op_mUfbDXFVPXLax3sQxGg4295Pi8AJKA"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      },
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Add Employee",
+        "operationId": "AddEmployee",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AddEmployeeRequest"
+                },
+                "description": "",
+                "example": [
+                  {
+                    "firstName": "moh",
+                    "lastName": "rrr",
+                    "email": "moh@gmail.com",
+                    "username": "mamad",
+                    "role": "EMPLOYEE",
+                    "password": "123"
+                  },
+                  {
+                    "firstName": "Helen",
+                    "lastName": "Nori",
+                    "email": "Helen@gmail.com",
+                    "username": "helen"
+                  }
+                ]
+              },
+              "example": [
+                {
+                  "firstName": "moh",
+                  "lastName": "rrr",
+                  "email": "moh@gmail.com",
+                  "username": "mamad",
+                  "role": "EMPLOYEE",
+                  "password": "123"
+                },
+                {
+                  "firstName": "Helen",
+                  "lastName": "Nori",
+                  "email": "Helen@gmail.com",
+                  "username": "helen"
+                }
+              ]
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Edit Employee",
+        "operationId": "EditEmployee",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzdlMDNmNDkwMzdkMTI4ZjAzMjlmMiIsInJvbGUiOiJFTVBMT1lFRSIsImlhdCI6MTY2NDg5MDM3OX0.0MSxVLE-YbX11r-PWpp7SzFXLvK5pnx2BPYcUusQTxs"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/EditEmployeeRequest"
+                  },
+                  {
+                    "example": {
+                      "firstName": "reyhan",
+                      "lastName": "varasteh",
+                      "email": "reyhan.jvh98@gmail.com",
+                      "username": "reyhan",
+                      "role": "EMPLOYEE",
+                      "id": "6338098d3a80ba2e81dad9c0"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "firstName": "reyhan",
+                "lastName": "varasteh",
+                "email": "reyhan.jvh98@gmail.com",
+                "username": "reyhan",
+                "role": "EMPLOYEE",
+                "id": "6338098d3a80ba2e81dad9c0"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Delete Employee",
+        "operationId": "DeleteEmployee",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzgwOThkM2E4MGJhMmU4MWRhZDljMCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2NDg5NDQ4Nn0.uu_uI7XW3oxKcjY4AGukdkq7g26rHbXFUCUqY1BIUrU"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get Employee",
+        "operationId": "GetEmployee",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/employee/id/comment": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Add Comment",
+        "operationId": "AddComment",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/employee/6337f93e06efc66701af172b/comments": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get Employee Comments",
+        "operationId": "GetEmployeeComments",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegisterRequest": {
+        "title": "RegisterRequest",
+        "required": [
+          "firstName",
+          "lastName",
+          "password",
+          "username",
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "firstName": "ali",
+          "lastName": "javaheri",
+          "password": "12345",
+          "username": "alireza",
+          "email": "bbbbb.jvh98@gmail.com"
+        }
+      },
+      "LoginRequest": {
+        "title": "LoginRequest",
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "username": "alireza",
+          "password": "1234"
+        }
+      },
+      "AddEmployeeRequest": {
+        "title": "AddEmployeeRequest",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "firstName": "moh",
+          "lastName": "rrr",
+          "email": "moh@gmail.com",
+          "username": "mamad",
+          "role": "EMPLOYEE",
+          "password": "123"
+        }
+      },
+      "EditEmployeeRequest": {
+        "title": "EditEmployeeRequest",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "username",
+          "role",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "firstName": "reyhan",
+          "lastName": "varasteh",
+          "email": "reyhan.jvh98@gmail.com",
+          "username": "reyhan",
+          "role": "EMPLOYEE",
+          "id": "6338098d3a80ba2e81dad9c0"
+        }
+      },
+      "DeleteEmployeeRequest": {
+        "title": "DeleteEmployeeRequest",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "username",
+          "role",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "firstName": "arsham",
+          "lastName": "khoee",
+          "email": "arsham@gmail.com",
+          "username": "arsham",
+          "role": "aaa",
+          "id": "633a3cba91fc1e23bdc40840"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication"
+    },
+    {
+      "name": "Employee"
+    },
+    {
+      "name": "Comment"
+    }
+  ]
+}

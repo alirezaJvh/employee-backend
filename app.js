@@ -8,7 +8,6 @@ import { AppRoutes } from './routes/index'
 dotenv.config()
 const { API_PORT } = process.env 
 const app = express();
-
 app.use(bodyParser.json());
 //https debug
 app.use(morgan("dev"))
