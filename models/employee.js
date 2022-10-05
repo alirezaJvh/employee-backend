@@ -31,7 +31,9 @@ const employeeSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-})
+}, { timestamps: { createdAt: 'created_at' } })
+
 employeeSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' })
 const EmployeeModel = mongoose.model('employee', employeeSchema)
+
 export { EmployeeModel }
