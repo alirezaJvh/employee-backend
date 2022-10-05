@@ -1,5 +1,6 @@
 import { singup, singin } from "../controller/auth";
-import { getAllEmployees, addEmployees, editEmployee, deleteEmployee } from "../controller/employee";
+import { getAllEmployees, addEmployees, editEmployee, deleteEmployee, getEmployee } from "../controller/employee";
+import { createComment, getCommentsById } from '../controller/comment'
 import { verifyToken } from "../middleware/auth-jwt";
 
 export const AppRoutes = [
@@ -37,6 +38,27 @@ export const AppRoutes = [
         path: '/employee',
         method: 'delete',
         action: deleteEmployee,
+        middlewares: [verifyToken],
+    },
+    {   
+        // get employee comments
+        path: '/employee/:id/comments',
+        method: 'get',
+        action: getCommentsById,
+        middlewares: [],
+    },
+    {
+        // get employee info
+        path: '/employee/:id',
+        method: 'get',
+        action: getEmployee,
+        middlewares: [verifyToken],
+    },
+    {
+        // create comment
+        path: '/employee/:id/comments',
+        method: 'post',
+        action: createComment,
         middlewares: [verifyToken],
     }
 ]
