@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { EmployeeModel } from '../models/employee'
+import { EmployeeModel } from '../models/Employee'
 import isEmail from 'validator/lib/isEmail';
 
 const singup = async (req, res) => {

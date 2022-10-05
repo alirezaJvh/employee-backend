@@ -1,4 +1,4 @@
-import { EmployeeModel } from '../models/employee'
+import { EmployeeModel } from '../models/Employee'
 import bcrypt from 'bcrypt';
 
 const getAllEmployees = async (req, res) => {
@@ -13,17 +13,32 @@ const getAllEmployees = async (req, res) => {
     }
 }
 
+const getEmployee = async (req, res) => {
+    try {
+        const { id } = req.params
+        const employee = await EmployeeModel.findById(id)
+        if (!employee) {
+            return res.status(404).json({message: 'Employee not found!'})
+        }
+        return res.status(200).json(employee)
+
+    } catch (e) {
+        console.log(e)
+        res.status(400)
+    }
+}
+
 const addEmployees = async (req, res) => {
     try {
         const { body } = req
         const employees = await prepareInputObj(body)
         console.log(employees)
         await EmployeeModel.insertMany(employees)
-        res.status(200).json({message: 'Users created successfully'})
+        return res.status(200).json({message: 'Users created successfully'})
     } catch (e) {
         console.log(e.errors)
         console.log(e.message)
-        res.status(400).json(e)
+        return res.status(400).json(e)
     }
 }
 
@@ -90,7 +105,6 @@ const deleteEmployee = async (req, res) => {
     try {
         const { employeeRole } = req
         const { id, ...user } = req.body
-        console.log(id)
         if(employeeRole !== 'ADMIN') {
             return res.status(401).json({message: 'Unauthorized action!'})
         }
@@ -103,6 +117,7 @@ const deleteEmployee = async (req, res) => {
 }
 
 export { 
+    getEmployee,
     getAllEmployees, 
     addEmployees,
     editEmployee,
